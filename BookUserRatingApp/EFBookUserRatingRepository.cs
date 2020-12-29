@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
-using UserBooks;
 using BookUserRatingApp.Entities;
+using System.Linq;
 
 namespace BookUserRatingRepository
 {
@@ -10,23 +10,26 @@ namespace BookUserRatingRepository
     {
         public List<BXBook> GetAllBooks()
         {
-            var db = new BooksUsersDB();
-            var books = db.BXBooks;
+            var db = new BookUsersDB();
+            return db.BXBooks.ToList();
         }
 
         public List<BXBookRating> GetAllBooksRatedByUser(int id)
         {
-            throw new NotImplementedException();
+            var db = new BookUsersDB();
+            return db.BXBookRatings.Where(x => x.UserID == id).Select(x => x).ToList();
         }
 
         public List<BXUser> GetAllUser()
         {
-            throw new NotImplementedException();
+            var db = new BookUsersDB();
+            return db.BXUsers.ToList();
         }
 
         public List<BXBookRating> GetTopRatedBooks()
         {
-            throw new NotImplementedException();
+            var db = new BookUsersDB();
+            return db.BXBookRatings.OrderByDescending(x => x.BookRating).Take(10).Select(x => x).ToList();
         }
     }
 }

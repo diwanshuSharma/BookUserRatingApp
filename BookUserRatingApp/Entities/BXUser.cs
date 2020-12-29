@@ -15,11 +15,11 @@ namespace BookUserRatingApp.Entities
         [StringLength(250)]
         public string City { get; set; }
 
-        [MaxLength(50)]
-        public byte[] State { get; set; }
+        [StringLength(50)]
+        public string State { get; set; }
 
-        [MaxLength(50)]
-        public byte[] Country { get; set; }
+        [StringLength(50)]
+        public string Country { get; set; }
 
         public int? Age { get; set; }
     }

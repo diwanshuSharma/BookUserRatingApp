@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using UserBooks;
+using BookUserRatingApp.Entities;
 
 namespace BookUserRatingApp
 {
@@ -14,6 +14,9 @@ namespace BookUserRatingApp
         {
 
             ADOBookUserRatingRepository ADO = new ADOBookUserRatingRepository();
+            EFBookUserRatingRepository EF = new EFBookUserRatingRepository();
+
+            int choice = 0;
 
             while (true)
             {
@@ -28,24 +31,57 @@ namespace BookUserRatingApp
                 Console.WriteLine();
 
                 int e = int.Parse(Console.ReadLine());
-
                 switch (e)
                 {
-                    case 1: ShowAllBooks(ADO); break;
-                    case 2: ShowAllBooksRatedByUser(ADO); break;
-                    case 3: ShowAllUser(ADO); break;
-                    case 4: ShowTopRatedBooks(ADO); break;
+                    case 1:
+                        Console.WriteLine("1. ADO (or)\n 2. EF ");
+                        Console.Write("Choice : ");
+                        choice = Int32.Parse(Console.ReadLine());
+                        if(choice == 1)
+                        ShowAllBooks(ADO); 
+                        else if(choice == 2)
+                            ShowAllBooks(EF);
+                        break;
+
+                    case 2:
+                        Console.WriteLine("1. ADO (or)\n 2. EF ");
+                        Console.Write("Choice : ");
+                        choice = Int32.Parse(Console.ReadLine());
+                        if (choice == 1) 
+                            ShowAllBooksRatedByUser(ADO);
+                        else if (choice == 2)
+                            ShowAllBooksRatedByUser(EF);
+                        break;
+                    case 3:
+                        Console.WriteLine("1. ADO (or)\n 2. EF ");
+                        Console.Write("Choice : ");
+                        choice = Int32.Parse(Console.ReadLine());
+                        if (choice == 1) 
+                            ShowAllUser(ADO);
+                        else if (choice == 2)
+                            ShowAllUser(EF);
+                        break;
+                    case 4:
+                        Console.WriteLine("1. ADO (or)\n 2. EF ");
+                        Console.Write("Choice : ");
+                        choice = Int32.Parse(Console.ReadLine());
+                        if (choice == 1) 
+                            ShowTopRatedBooks(ADO);
+                        else if (choice == 2)
+                            ShowTopRatedBooks(EF);
+                        break;
                     case 5: return;
                 }
             }
 
-            Console.ReadLine();
+            
+            //Console.ReadLine();
 
         }
 
-        private static void ShowAllBooks(in ADOBookUserRatingRepository ADO)
+        private static void ShowAllBooks(in IBookUserRatingRepository Repository)
         {
-            List<BXBook> books = ADO.GetAllBooks();
+            List<BXBook> books = Repository.GetAllBooks();
 
             foreach (var book in books)
             {
@@ -58,12 +94,12 @@ namespace BookUserRatingApp
             }
         }
 
-        private static void ShowAllBooksRatedByUser(in ADOBookUserRatingRepository ADO)
+        private static void ShowAllBooksRatedByUser(in IBookUserRatingRepository Repository)
         {
             Console.Write("User ID : ");
             int id = Int32.Parse(Console.ReadLine());
 
-            List<BXBookRating> records = ADO.GetAllBooksRatedByUser(id);
+            List<BXBookRating> records = Repository.GetAllBooksRatedByUser(id);
 
             if (records.Count != 0)
             {
@@ -72,7 +108,7 @@ namespace BookUserRatingApp
                 Console.WriteLine("----------------------------------");
                 foreach (var row in records)
                 {
-                    Console.WriteLine($"\n{row.Userid}\t" +
+                    Console.WriteLine($"\n{row.UserID}\t" +
                             $"{row.ISBN}\t" +
                             $"{row.BookRating}"
                         );
@@ -84,33 +120,35 @@ namespace BookUserRatingApp
             
         }
 
-        private static void ShowAllUser(in ADOBookUserRatingRepository ADO)
+        private static void ShowAllUser(in IBookUserRatingRepository Repository)
         {
-            List<BXUser> records = ADO.GetAllUser();
+            List<BXUser> records = Repository.GetAllUser();
 
             Console.WriteLine("-------------------------------------");
-            Console.WriteLine("UserID\tAge\tLocation");
+            Console.WriteLine("UserID\tAge\tCity\tState\tCountry");
             Console.WriteLine("-------------------------------------");
             foreach (var row in records)
             {
                 Console.WriteLine($"\n{row.UserID}\t" +
                         $"{row.Age}\t" +
-                        $"{row.Location}"
+                        $"{row.City}\t"+
+                        $"{row.State}\t"+
+                        $"{row.Country}"
                     );
             }
             Console.WriteLine("-------------------------------------");
         }
 
-        private static void ShowTopRatedBooks(in ADOBookUserRatingRepository ADO)
+        private static void ShowTopRatedBooks(in IBookUserRatingRepository Repository)
         {
-            List<BXBookRating> records = ADO.GetTopRatedBooks();
+            List<BXBookRating> records = Repository.GetTopRatedBooks();
 
             Console.WriteLine("-------------------------------------");
             Console.WriteLine("UserID\tISBN\t\tBookRating");
             Console.WriteLine("-------------------------------------");
             foreach (var row in records)
             {
-                Console.WriteLine($"\n{row.Userid}\t" +
+                Console.WriteLine($"\n{row.UserID}\t" +
                         $"{row.ISBN}\t" +
                         $"{row.BookRating}"
                     );

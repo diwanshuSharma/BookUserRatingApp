@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Configuration;
 using System.Data;
 using System.Data.Common;
-using UserBooks;
+using BookUserRatingApp.Entities;
 
 namespace BookUserRatingRepository
 {
@@ -93,7 +93,7 @@ namespace BookUserRatingRepository
                     {
                         BXBookRating rating = new BXBookRating();
 
-                        rating.Userid = Convert.ToInt32(reader[0].ToString());
+                        rating.UserID = Convert.ToInt32(reader[0].ToString());
                         rating.ISBN = reader[1].ToString();
                         rating.BookRating = Convert.ToInt32(reader[2].ToString());
                         ratings.Add(rating);
@@ -129,9 +129,11 @@ namespace BookUserRatingRepository
 
                     user.UserID = Int32.Parse(reader[0].ToString());
                    
-                    user.Location = reader[1].ToString();
-                   
-                    string tempAge = reader[2].ToString();
+                    user.City = reader[1].ToString();
+                    user.City = reader[2].ToString();
+                    user.City = reader[3].ToString();
+
+                    string tempAge = reader[4].ToString();
 
                     // -1 define : if age is null
                     if (tempAge.Length == 0 || tempAge == null)
@@ -171,7 +173,7 @@ namespace BookUserRatingRepository
                 {
                     BXBookRating rating = new BXBookRating();
 
-                    rating.Userid = Int32.Parse(reader[0].ToString());
+                    rating.UserID = Int32.Parse(reader[0].ToString());
                     rating.ISBN = reader[1].ToString();
                     rating.BookRating = Int32.Parse(reader[2].ToString());
 

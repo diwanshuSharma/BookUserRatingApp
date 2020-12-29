@@ -55,7 +55,7 @@
   <ItemGroup>
     <Compile Include="ADOBookUserRatingRepository.cs" />
     <Compile Include="EFBookUserRatingRepository.cs" />
-    <Compile Include="Entities\BooksUsersDB.cs" />
+    <Compile Include="Entities\BookUsersDB.cs" />
     <Compile Include="Entities\BXBook.cs" />
     <Compile Include="Entities\BXBookRating.cs" />
     <Compile Include="Entities\BXUser.cs" />
@@ -67,11 +67,6 @@
     <None Include="App.config" />
     <None Include="packages.config" />
   </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\UserBooks\UserBooks.csproj">
-      <Project>{b5b6a336-bff7-4873-a8f9-dc28655567e5}</Project>
-      <Name>UserBooks</Name>
-    </ProjectReference>
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
